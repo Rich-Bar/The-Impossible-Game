@@ -88,7 +88,10 @@ public class KeyInput extends KeyAdapter
     }
     
     public boolean getEsc(){
-     return esc;
+    	if(esc){
+    		esc = false;
+    		return true;
+    	}else return false;
     }
     
     public void setEsc(boolean esc){
