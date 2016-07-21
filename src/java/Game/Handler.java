@@ -11,34 +11,39 @@ import InPut.KeyInput;
 
 public class Handler extends GameMode{
 
+	private int width;
 	private GameObject playerObject;
-	private MapHandler mapHandler;
-	private Game game;
+	public Map<Integer, List<GameObject>> object = new HashMap<>();
+	
 	private KeyInput key;
 	
-	private static int jumpSpeed = -(int)11;
+    private static int jumpSpeed = -(int)11;
     private static int runSpeed = (int)6;
-    private static int width, widthL, widthR;
-    private int distance;
-	private Map<Integer, List<GameObject>> object = new HashMap<>();
-	private int cerrentX;
-	
-	public Handler(Game game){
-		this.game = game;
-		mapHandler = new MapHandler(this, game.getWidth());
+
+    private int RPosX, RPosY, playerX;
+
+    private int distance, tilePixel;
+    
+    private MapHandler map;
+    
+    public boolean blabla = false;
+	public Handler(Game game, String path){
 		key = game.getKey();
 		width = game.getWidth();
-		widthL = width / 4;
-		widthR = width + widthL;
+		map = new MapHandler(this, width, path);
 	}
+
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		if(playerObject == null)return;
-        if(key.getEnter()){
-            playerObject.reSetPlayer();
+		map.tick();
+		playerObject.tick();
+		playerX = playerObject.getX();
+		
+		if(key.getEnter()){
+            playerObject.reSetPlayer();//wenn Enter gedrückt wurde dann wir der Spieler zu dem AnfangsPunkt zurückgesetzt
         }
-        if(key.getSpace() && !playerObject.isJumping() && playerObject.getVelX() != 0){//wenn der Spiler nicht steht oder springt oder am falle und space gedrückt wurde ist dann wird er in nagativer an der y Achse Beschleunigt
+		if(key.getSpace() && !playerObject.isJumping() && playerObject.getVelX() != 0){//wenn der Spiler nicht steht oder springt oder am falle und space gedrückt wurde ist dann wird er in nagativer an der y Achse Beschleunigt
             playerObject.setJumping(true);
             playerObject.setFalling(true);
             playerObject.setVelY(jumpSpeed);
@@ -47,19 +52,19 @@ public class Handler extends GameMode{
             playerObject.setVelX(runSpeed);
             key.setSpaceR(false);
         }else key.setSpaceR(false);
-        //playerObject.tick(object);
-        //System.out.println(playerX);
         setDistance();
-        cerrentX = playerObject.getX() - 7;
 	}
 
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
-		for(int x = playerObject.getX() - widthL; x <= widthR; x++){
-			for(int y = 0; y <= object.get(x).size(); y++){
-				object.get(x).get(y).render();ww
-			}
+		playerObject.render(g);
+		for(int x = (playerX - width) /32; x <= (playerX + width) /32; x++){
+			//System.out.println("redereeesdf    " + x);
+			if(object.containsKey(x))for(GameObject objectttt : getObject().get(x)){
+									//System.out.println(getObject());
+									objectttt.render(g);
+									}
 		}
 	}
 
@@ -72,29 +77,57 @@ public class Handler extends GameMode{
 	@Override
 	public GameObject playerObject() {
 		// TODO Auto-generated method stub
+		//System.out.println("PlayerObject????");
 		return playerObject;
 	}
-	
-	public int getPlayerX(){
-		return (int)playerObject.getX() / 32;
+
+	public void addPlayer(int x, int y) {
+		// TODO Auto-generated method stub
+		playerObject = new Player(x, y, ObjectID.Player, this, Game.getTextures());
+		System.out.println("Player added!");
 	}
 	
-	private void setDistance(){//Setzt die distanz des Spilers
-        if((int)playerObject.getX() <= distance)return;
-        distance = (int)playerObject.getX();
+	private void setDistance(){
+		if(playerX >= distance)distance = playerX;
+	}
+	
+	public void setPlayerReStartPoint(int x, int y){//setzt der respawne punkt des Spielers
+        RPosX = x;
+        RPosY = y;
+    }
+	
+	public int getRPosX(){
+        //System.out.println(RPosX);
+        return RPosX;
     }
     
-    public int getDistance(){
-        return distance;
+    public int getRPosY(){
+        //System.out.println(RPosY);
+        return RPosY;
     }
     
-    public Map<Integer, List<GameObject>> getObject(){
-    	return object;
+    public int getPlayerX(){
+        //System.out.println("handler getPlayerX() : " + playerX);
+        return playerX;
     }
     
-    public int getCerrentX(){
-    	return cerrentX;
+    public void addObject(int x, List<GameObject> list){
+    	object.put(x, list);
+    }
     
+    public void clearObject(int x){
+    	object.remove(x);
+    }
+    
+    public void addListObject(int x, List<GameObject> list){
+    	object.put(x, list);
+    	System.out.println(object.get(x));
     }
 
+	@Override
+	public Map<Integer, List<GameObject>> getObject() {
+		// TODO Auto-generated method stub
+		return object;
+	}
+	
 }

@@ -9,6 +9,7 @@ import GameState.Menu;
 import GameState.MenuHelp;
 import GameState.MenuLevel;
 import InPut.*;
+import Texture.Texture;
 import Game.Handler;
 public class Game extends Canvas implements Runnable {
 
@@ -31,6 +32,8 @@ private Handler handler;
 private BufferStrategy bs;
 private Graphics g;
 private Graphics2D g2d;
+private static Texture tex;
+
 private void init(){
 	key = new KeyInput();
 	this.addKeyListener(key);
@@ -39,7 +42,8 @@ private void init(){
 	this.addMouseMotionListener(mouse);
 	stateHandler = new StateHandler();
 	gameMode = new Menu(this);
-	cam = new Camara(0,0);
+	tex = new Texture(stateHandler);
+	cam = new Camara(this, 0,0);
 	if(bs == null){//wenn noch keine BufferStrategy exestiert wird eine mit dem Wert 3 erstellt
         this.createBufferStrategy(3);
     }
@@ -95,25 +99,33 @@ private void init(){
 		if(gameMode.playerObject() != null){
 			cam.tick(gameMode.playerObject());
 		}
+		if(key.getEsc() == true){
+			System.exit(0);
+		}
 		gameMode.tick();
 	}
 	
 	public void render(){
         bs = this.getBufferStrategy();
-        g = bs.getDrawGraphics();//Die Graphincs benutzen jetzt die Graphics der BufferedStategy
-        g2d = (Graphics2D) g;//die Graphics2D sind das gleiche wie die Graphics
+        g = bs.getDrawGraphics();
+        g2d = (Graphics2D) g;
         
-        g.setColor(Color.black);//Setzt denn hintergrund Schwartz
-        g.fillRect(0, 0, getWidth(), getHeight());//Fühlt denn Ganzen JFrame
+        g.setColor(Color.black);
+        g.fillRect(0, 0, getWidth(), getHeight());
         
         g2d.translate(cam.getX(), cam.getY());
 		gameMode.render(g);
+        g2d.translate(-cam.getX(), -cam.getY());
 		g.dispose();
 		bs.show();
 	}
 	
 	public void setGameMode(GameMode mode){
 		gameMode = mode;
+	}
+	
+	public void setGame(String level){
+		setGameMode(new Handler(this, level));
 	}
 	
 	public MouseInput getMouse(){
@@ -126,5 +138,9 @@ private void init(){
 	
 	public StateHandler getStateHandler(){
 		return stateHandler;
+	}
+	
+	public static Texture getTextures(){
+		return tex;
 	}
 }

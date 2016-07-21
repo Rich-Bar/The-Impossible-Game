@@ -1,6 +1,8 @@
 package Main;
 
 import java.awt.Graphics;
+import java.util.List;
+import java.util.Map;
 
 import Game.GameObject;
 
@@ -12,4 +14,6 @@ public abstract class GameMode {
 	
 	}
 	public abstract GameObject playerObject();
+	
+	public abstract Map<Integer, List<GameObject>> getObject();
 }

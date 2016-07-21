@@ -2,6 +2,8 @@ package GameState;
 import java.awt.Graphics;
 import Main.GameMode;
 import java.awt.Image;
+import java.util.List;
+import java.util.Map;
 
 import Main.Game;
 import InPut.KeyInput;
@@ -85,6 +87,12 @@ public class MenuStates extends GameMode
 
 	@Override
 	public GameObject playerObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<Integer, List<GameObject>> getObject() {
 		// TODO Auto-generated method stub
 		return null;
 	}

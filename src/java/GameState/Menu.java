@@ -7,7 +7,10 @@ import InPut.MouseInput;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Map;
 
+import Game.GameObject;
 //import Game.GameObject;
 import Main.Game;
 public class Menu extends GameMode{
@@ -37,7 +40,7 @@ public class Menu extends GameMode{
         int xx = mouse.getXPos();//X Koordinate wo die Mouse hinzeigt
         int yy = mouse.getYPos();//Y Koordinate wo die Mouse hinzeigt
         if(x >= (int)(width / 5.8) && x <= ((int)(width / 5.8) + width / 5) && y >= startY + (int)(height / 1.97) && y <= startY + ((int)(height / 1.97) + height / 11)){//Testet ob die Mouse in einen Bereich gedrückt wurde
-        	game.setGameMode(new MenuLevel());
+        	game.setGameMode(new MenuLevel(game));
         }
         if(xx >= (int)(width / 5.8) && xx <= ((int)(width / 5.8) + width / 5) && yy >= startY + (int)(height / 1.97) && yy <= startY + ((int)(height / 1.97) + height / 11)){//Testet ob die Mouse sich in einem bereich liegt
             startButton = true;//wird gesetzt wenn sich die mouse auf dem start Button liegt
@@ -105,6 +108,11 @@ public class Menu extends GameMode{
 	}
 	@Override
 	public GameObject playerObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Map<Integer, List<GameObject>> getObject() {
 		// TODO Auto-generated method stub
 		return null;
 	}

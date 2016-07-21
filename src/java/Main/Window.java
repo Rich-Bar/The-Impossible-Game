@@ -10,7 +10,7 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
+        frame.setAlwaysOnTop(false);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.dispose();
         frame.setUndecorated(true);

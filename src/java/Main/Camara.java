@@ -2,19 +2,26 @@ package Main;
 import Game.GameObject;
 public class Camara {
 	private int x,y;
-    public Camara(int x, int y)
+	private int width, height;
+    public Camara(Game game, int x, int y)
     {
         this.x = x;
         this.y = y;
+        width = game.getStateHandler().getInt("width") / 2;
+        height = game.getStateHandler().getInt("height") / 2;
+        
     }
     
     public void tick(GameObject player){
-        x = -player.getX() + Game.WIDTH/2;
-        if(y - (-player.getY() + Game.HEIGHT/2 + 100) >= 3){//wenn er zuchoch ist wird die Welt nach untenverschoben
-            y = -player.getY() + Game.HEIGHT/2 + 100;
+        x = -player.getX()  + width;
+        //System.out.println(x);
+        //System.out.println(player.getY());
+        //System.out.println(y - (-player.getY() + height + 100));
+        if(y - (-player.getY()  + height + 100) >= 3){//wenn er zuchoch ist wird die Welt nach untenverschoben
+            y = -player.getY() + height + 100;
         }
-        if( y - (-player.getY() + Game.HEIGHT/2 - 100) <= -3){//wenn er zu niedrig ist wird die Welt nach unten verschoben
-             y = -player.getY() + Game.HEIGHT/2 - 100;
+        if( y - (-player.getY() + height - 100) <= -3){//wenn er zu niedrig ist wird die Welt nach unten verschoben
+             y = -player.getY() + height - 100;
         }
     }
     
