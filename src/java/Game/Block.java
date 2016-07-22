@@ -1,10 +1,10 @@
-package Game;
+package game;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import Main.Game;
-import Texture.Texture;
+import io.Texture;
+import main.Game;
 
 public class Block extends GameObject{
 
@@ -26,7 +26,7 @@ public class Block extends GameObject{
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
-		//System.out.println("I bin a Blóck");
+		//System.out.println("I bin a Blï¿½ck");
 		g.drawImage(tex.block[type], (int)x, (int)y, 32, 32, null);
 	}
 

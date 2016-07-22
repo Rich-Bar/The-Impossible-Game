@@ -1,13 +1,11 @@
-package Game;
+package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.List;
-import java.util.Map;
 
-import Main.Game;
-import Texture.Texture;
+import io.Texture;
+import main.Game;
 
 public class Player extends GameObject{
 
@@ -15,7 +13,6 @@ public class Player extends GameObject{
     private float width = 32, height = 32;
     private float gravity = 0.8f;
     private float maxSpeed = 8;
-	private int posX, posY;
 	private int reSetX, reSteY; 
 	private Handler h;
 	private Animation playerWalk;
@@ -30,9 +27,8 @@ public class Player extends GameObject{
 	}
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		x += velX;//addirt die geschwindigkeit zu der Position
-         y += velY;
+        y += velY;
         if(falling || jumping){//Wenn der Spieler am fliegen oder im Springen ist dann wird 
             velY += gravity;//die Y Koordinate solange erhöt bis wieder ein Block unter dem Spieler ist
             
@@ -96,7 +92,6 @@ public class Player extends GameObject{
 		
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 		g.setColor(Color.blue);
         if(falling == true && jumping == true){//Wenn er in der luft ist dann wird die animation durchgeführt
             playerWalk.drawAnimation(g, (int)x, (int)y, (int)width, (int)height);

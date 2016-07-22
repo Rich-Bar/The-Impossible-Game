@@ -1,11 +1,11 @@
-package GameState;
+package gamestate;
 import java.awt.Graphics;
 import java.util.List;
 import java.util.Map;
 
-import Main.Game;
-import Game.GameObject;
-import Main.GameMode;
+import game.GameObject;
+import main.Game;
+import main.GameMode;
 public class MenuHelp extends GameMode{
 
 	public MenuHelp(Game game){

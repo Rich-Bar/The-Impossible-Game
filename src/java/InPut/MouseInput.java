@@ -1,23 +1,18 @@
-package InPut;
+package input;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MouseInput extends MouseAdapter
 {
-    private int posX, posY;    
+    private boolean isPressed;   
     private int Xpos, Ypos;
-    private int posXR, posYR;
     public void mousePressed(MouseEvent e){//wird ausgeführt wenn die mouse taste gedrückt wurde
-        //System.out.println(e.getPoint());
-        posX = (int)e.getPoint().getX();//setzt denn punkt wo die gedrückt wurde
-        posY = (int)e.getPoint().getY();
+    	isPressed = true;
     }
     
     public void mouseReleased(MouseEvent e){//wird ausgeführt wenn die Mouse taste losgelassen wird
-        posX = posY = 0;//setzt die Variable auf null da diese nur angeben wo die Mouse gedrückt wird
-        posXR = (int)e.getPoint().getX();//setzt den Punkt wo die Mouse gedrückt wurde
-        posYR = (int)e.getPoint().getY();
+    	isPressed = false;
     }
     
     public void mouseMoved(MouseEvent e){//gibt an wo die Mouse hinbewegt wurde
@@ -26,12 +21,8 @@ public class MouseInput extends MouseAdapter
         Ypos = (int)e.getPoint().getY();
     }
     
-    public int getPosX(){
-        return posX;
-    }
-    
-    public int getPosY(){
-        return posY;
+    public boolean isPressed(){
+        return isPressed;
     }
     
     public int getXPos(){
@@ -40,17 +31,5 @@ public class MouseInput extends MouseAdapter
     
     public int getYPos(){
         return Ypos;
-    }
-    
-    public int getPosXR(){
-        return posXR;
-    }
-    
-    public int getPosYR(){
-        return posYR;
-    }
-    
-    public void reSetPosXYR(){
-        posXR = posYR = 0;
     }
 }

@@ -1,16 +1,14 @@
-package Main;
+package main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import GameState.Menu;
-import GameState.MenuHelp;
-import GameState.MenuLevel;
-import InPut.*;
-import Texture.Texture;
-import Game.Handler;
+import game.Handler;
+import gamestate.Menu;
+import input.*;
+import io.Texture;
 public class Game extends Canvas implements Runnable {
 
 	/**
@@ -27,7 +25,6 @@ private MouseInput mouse;
 private KeyInput key;
 private StateHandler stateHandler;
 private Camara cam;
-private Handler handler;
 
 private BufferStrategy bs;
 private Graphics g;
@@ -42,7 +39,7 @@ private void init(){
 	this.addMouseMotionListener(mouse);
 	stateHandler = new StateHandler();
 	gameMode = new Menu(this);
-	tex = new Texture(stateHandler);
+	tex = new Texture();
 	cam = new Camara(this, 0,0);
 	if(bs == null){//wenn noch keine BufferStrategy exestiert wird eine mit dem Wert 3 erstellt
         this.createBufferStrategy(3);
@@ -51,11 +48,9 @@ private void init(){
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		init();
 		this.requestFocus();
         long lastTime = System.nanoTime();
-        long lastFPSTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;

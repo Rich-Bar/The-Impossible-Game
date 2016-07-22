@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -16,10 +16,8 @@ public class StateHandler implements Runnable{
     private boolean firstOpen = true, sound = true;
     private boolean level1, level2, level3, level4, level5 = false;
     private int dLevel1, dLevel2, dLevel3, dLevel4, dLevel5 = 0;
-    private String quality = "high";
-    private int tilePixel = 32;
     
-    private double height, width;
+    public static double height, width;
     private int startY = 0;
     
     private Thread t;
@@ -159,7 +157,8 @@ public class StateHandler implements Runnable{
     
     private void read(){//liest die datei wo die States gespeichert werden
         try{
-            BufferedReader reader = new BufferedReader(new FileReader(config));
+            @SuppressWarnings("resource")
+			BufferedReader reader = new BufferedReader(new FileReader(config));
             
             String line;
             int i = 0;

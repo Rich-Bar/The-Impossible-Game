@@ -1,21 +1,20 @@
-package GameState;
+package gamestate;
 import java.awt.Graphics;
-import Main.GameMode;
 import java.awt.Image;
 import java.util.List;
 import java.util.Map;
 
-import Main.Game;
-import InPut.KeyInput;
-import Texture.ReadImage;
-import Main.StateHandler;
-import Game.GameObject;
+import game.GameObject;
+import input.KeyInput;
+import io.ReadImage;
+import main.Game;
+import main.GameMode;
+import main.StateHandler;
 
 import java.awt.Font;
 import java.awt.Color;
 public class MenuStates extends GameMode
 {
-    private Game game;
     private KeyInput key;
     private StateHandler statesHandler;
     private Image[] pages = new Image[5];
@@ -26,7 +25,6 @@ public class MenuStates extends GameMode
     private boolean passed;
     public MenuStates(Game game)//Konstruktor wird in init() augeführt
     {
-        this.game = game;//Überschreibt Objecte
         this.key = game.getKey();
         this.statesHandler = game.getStateHandler();
         getGraphics();//Laä die Bilder
@@ -81,19 +79,16 @@ public class MenuStates extends GameMode
 
 	@Override
 	public String modeName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public GameObject playerObject() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Map<Integer, List<GameObject>> getObject() {
-		// TODO Auto-generated method stub
 		return null;
 	}
     

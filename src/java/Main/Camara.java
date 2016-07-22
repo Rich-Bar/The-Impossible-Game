@@ -1,5 +1,5 @@
-package Main;
-import Game.GameObject;
+package main;
+import game.GameObject;
 public class Camara {
 	private int x,y;
 	private int width, height;

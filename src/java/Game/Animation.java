@@ -1,7 +1,7 @@
-package Game;
+package game;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+
 public class Animation
 {
     private int speed;
@@ -13,9 +13,6 @@ public class Animation
     private BufferedImage[] images;
     private BufferedImage currentImg;
     
-    private Graphics2D g2d;
-    
-    private int rotate;
     public Animation(int speed, BufferedImage... args)//Dise Klasse ist für dei sprung animation da
     {
         this.speed = speed;

@@ -1,4 +1,4 @@
-package Game;
+package game;
 
 public enum ObjectID//Dies sind die Verschiedenen Bloch typen
 {

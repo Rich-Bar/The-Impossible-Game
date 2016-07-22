@@ -1,13 +1,12 @@
-package Game;
+package game;
 import java.awt.Graphics;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import Main.Game;
-import Main.GameMode;
-import InPut.KeyInput;
+import input.KeyInput;
+import main.Game;
+import main.GameMode;
 
 public class Handler extends GameMode{
 
@@ -22,7 +21,7 @@ public class Handler extends GameMode{
 
     private int RPosX, RPosY, playerX;
 
-    private int distance, tilePixel;
+    private int distance;
     
     private MapHandler map;
     
@@ -35,7 +34,6 @@ public class Handler extends GameMode{
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		map.tick();
 		playerObject.tick();
 		playerX = playerObject.getX();
@@ -57,7 +55,6 @@ public class Handler extends GameMode{
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 		playerObject.render(g);
 		for(int x = (playerX - width) /32; x <= (playerX + width) /32; x++){
 			//System.out.println("redereeesdf    " + x);
@@ -70,19 +67,16 @@ public class Handler extends GameMode{
 
 	@Override
 	public String modeName() {
-		// TODO Auto-generated method stub
 		return "Game";
 	}
 
 	@Override
 	public GameObject playerObject() {
-		// TODO Auto-generated method stub
 		//System.out.println("PlayerObject????");
 		return playerObject;
 	}
 
 	public void addPlayer(int x, int y) {
-		// TODO Auto-generated method stub
 		playerObject = new Player(x, y, ObjectID.Player, this, Game.getTextures());
 		System.out.println("Player added!");
 	}
@@ -126,7 +120,6 @@ public class Handler extends GameMode{
 
 	@Override
 	public Map<Integer, List<GameObject>> getObject() {
-		// TODO Auto-generated method stub
 		return object;
 	}
 	

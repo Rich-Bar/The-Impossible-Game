@@ -1,11 +1,9 @@
-package Game;
+package game;
 
-import java.awt.List;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-import Texture.ReadImage;
-import Game.Player;
+import io.ReadImage;
 
 public class MapHandler{
 
@@ -13,8 +11,7 @@ public class MapHandler{
 	private int width;
 	private Integer[][] imap;
 	private BufferedImage map;
-	private int sizeX, sizeY;
-	private int playerX, playerY;
+	private int sizeY;
 	private int renderPlayerX;
 	public MapHandler(Handler h, int width, String path){
 		this.h= h;
@@ -27,7 +24,6 @@ public class MapHandler{
 				imap[x][y] = getState(x,y);
 				sizeY = y - 1;
 			}
-			sizeX = x;
 		}
 		
 		//map = null;
@@ -46,13 +42,14 @@ public class MapHandler{
 		int left = 1;
 		if(h.getPlayerX() - width > 0) left = h.getPlayerX() - width;
 		for(int x = left; x <= h.getPlayerX() + width; x++){
-
 			LinkedList<GameObject> list = new LinkedList<>();
+			
 			for(int y = 0; y <= sizeY; y++){
 				GameObject object = addObject(imap[x][y], y , x);
 				if(object != null)list.add(object);
 			}
-			if(list == null) return;
+			
+			if(list.isEmpty()) return;
 			h.addListObject(x, list);
 			System.out.println(x + " : List: " + list);
 		}
@@ -62,7 +59,6 @@ public class MapHandler{
 	}
 	
 	private int getState(int x, int y){
-		int rgb;
 		int pixel = 0;
         try{
             pixel = map.getRGB(x, y);
@@ -113,8 +109,6 @@ public class MapHandler{
 		for(int x = 0; x <= imap.length - 1; x++){
 			for(int y = 0; y <= imap[x].length - 1;y++){
 				if(imap[x][y] == 3){
-					playerX = x;
-					playerY = y;
 					h.addPlayer(x *32, y*32);
 					System.out.println("Player set " + x + " : " + y);
 				}
