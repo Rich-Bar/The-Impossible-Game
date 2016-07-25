@@ -2,8 +2,11 @@ package button;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.ReadImage;
+import io.SpriteSheet;
 import main.StateHandler;
 
 /**
@@ -14,7 +17,7 @@ import main.StateHandler;
  */
 public class ToggleHoverButton implements IButton{
 
-	private BufferedImage buttonImg;
+	private List<BufferedImage> imgStates = new ArrayList<BufferedImage>();
 	private int imageWidth, imageHeight;
 	private double 
 			screenWidth = StateHandler.width,
@@ -31,10 +34,17 @@ public class ToggleHoverButton implements IButton{
 	 */
 	public ToggleHoverButton(String path, double x, double y, double scale, boolean toggled) {
 		ReadImage loader = new ReadImage();  
-		buttonImg = loader.loadImage(path); 
+		BufferedImage composedImg = loader.loadImage(path); 
+		SpriteSheet imgSheet = new SpriteSheet(composedImg);
 		
-		imageWidth = buttonImg.getWidth();
-		imageHeight = buttonImg.getHeight();
+		imageWidth = composedImg.getWidth()/2;
+		imageHeight = composedImg.getHeight()/2;
+		
+		imgStates.add(imgSheet.grabImage(1, 1, imageWidth, imageHeight));
+		imgStates.add(imgSheet.grabImage(1, 2, imageWidth, imageHeight));
+		imgStates.add(imgSheet.grabImage(2, 1, imageWidth, imageHeight));
+		imgStates.add(imgSheet.grabImage(2, 2, imageWidth, imageHeight));
+		
 		this.scale = scale;
 		this.toggled = toggled;
 		
@@ -42,18 +52,16 @@ public class ToggleHoverButton implements IButton{
 		this.x = x / 100;
 		this.y = y / 100;
 		
-		relativeWidth = imageWidth * screenWidth / 1920 / 2;
-		relativeHeight = imageHeight * screenHeight / 1080 / 2;
+		relativeWidth = imageWidth * screenWidth / 1920;
+		relativeHeight = imageHeight * screenHeight / 1080;
 	}
 	
 	public void render(Graphics g){
 		//drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer)
-		g.drawImage(buttonImg, 	(int)(screenWidth * x), (int)(screenHeight * y),
-								(int)(screenWidth * x + relativeWidth * scale), (int)(screenHeight * y + relativeHeight * scale),
-								hovered ? 0 : imageWidth / 2, toggled ? 0 : imageHeight / 2, 
-								hovered ? imageWidth / 2 : imageWidth, toggled ? imageHeight / 2 : imageHeight,
-								null);
-		
+		g.drawImage(imgStates.get(hovered? toggled? 0 : 1 : toggled? 2 : 3), 
+					(int)(screenWidth * x), (int)(screenHeight * y), 
+					(int)(relativeWidth * scale), (int)(relativeHeight * scale), 
+					null);		
 	}
 	
 	/**
