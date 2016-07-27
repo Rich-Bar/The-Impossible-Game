@@ -2,8 +2,10 @@ package button;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import io.ReadImage;
+import io.SpriteSheet;
 import main.StateHandler;
 
 /**
@@ -14,7 +16,7 @@ import main.StateHandler;
  */
 public class HoverButton implements IButton{
 
-	private BufferedImage buttonImg;
+	private List<BufferedImage> imgStates;
 	private int imageWidth, imageHeight;
 	private double 
 			screenWidth = StateHandler.width,
@@ -30,10 +32,13 @@ public class HoverButton implements IButton{
 	 */
 	public HoverButton(String path, double x, double y, double scale) {
 		ReadImage loader = new ReadImage();  
-		buttonImg = loader.loadImage(path); 
+		BufferedImage composedImg = loader.loadImage(path); 
+		SpriteSheet imgSheet = new SpriteSheet(composedImg);
 		
-		imageWidth = buttonImg.getWidth();
-		imageHeight = buttonImg.getHeight();
+		imgStates = imgSheet.getImages(1, 2);
+		
+		imageWidth = composedImg.getWidth();
+		imageHeight = composedImg.getHeight()/2;
 		
 		//Calculate and set variables to save CPU
 		
@@ -42,16 +47,14 @@ public class HoverButton implements IButton{
 		this.scale = scale;
 		
 		relativeWidth = (imageWidth / 1920.) * screenWidth;
-		relativeHeight = (imageHeight / 1080.) * screenHeight / 2 ;
+		relativeHeight = (imageHeight / 1080.) * screenHeight;
 	}
 	
 	public void render(Graphics g){
-		//drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer)
-		g.drawImage(buttonImg, 	(int)(screenWidth * x), (int)(screenHeight * y),
-								(int)(screenWidth * x + relativeWidth * scale), (int)(screenHeight * y + relativeHeight * scale),
-								0, hovered ? imageHeight / 2 : 0, 
-								imageWidth, hovered ? imageHeight : imageHeight / 2,
-								null);
+		g.drawImage(imgStates.get(hovered? 1 : 0), 
+				(int)(screenWidth * x), (int)(screenHeight * y), 
+				(int)(relativeWidth * scale), (int)(relativeHeight * scale), 
+				null);
 		
 	}
 	

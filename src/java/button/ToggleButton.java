@@ -2,8 +2,10 @@ package button;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import io.ReadImage;
+import io.SpriteSheet;
 import main.StateHandler;
 
 /**
@@ -15,7 +17,7 @@ import main.StateHandler;
  */
 public class ToggleButton implements IButton{
 
-	private BufferedImage buttonImg;
+	private List<BufferedImage> imgStates;
 	private int imageWidth, imageHeight;
 	private double 
 			screenWidth = StateHandler.width,
@@ -30,11 +32,15 @@ public class ToggleButton implements IButton{
 	 * @param scale - scaling of the button [ 1 = 100% ]
 	 */
 	public ToggleButton(String path, double x, double y, double scale, boolean toggled) {
-		ReadImage loader = new ReadImage();  
-		buttonImg = loader.loadImage(path); 
+		ReadImage loader = new ReadImage();   
+		BufferedImage composedImg = loader.loadImage(path); 
+		SpriteSheet imgSheet = new SpriteSheet(composedImg);
 		
-		imageWidth = buttonImg.getWidth();
-		imageHeight = buttonImg.getHeight();
+		imgStates = imgSheet.getImages(1, 2);
+		
+		imageWidth = composedImg.getWidth();
+		imageHeight = composedImg.getHeight()/2;
+		
 		this.scale = scale;
 		this.toggled = toggled;
 		
@@ -43,17 +49,14 @@ public class ToggleButton implements IButton{
 		this.y = y / 100;
 		
 		relativeWidth = imageWidth * screenWidth / 1920;
-		relativeHeight = imageHeight * screenHeight / 1080 / 2;
+		relativeHeight = imageHeight * screenHeight / 1080;
 	}
 	
 	public void render(Graphics g){
-		//drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer)
-		g.drawImage(buttonImg, 	(int)(screenWidth * x), (int)(screenHeight * y),
-								(int)(screenWidth * x + relativeWidth * scale), (int)(screenHeight * y + relativeHeight * scale),
-								0, toggled ? imageHeight / 2 : 0, 
-								imageWidth, toggled ? imageHeight : imageHeight / 2,
-								null);
-		
+		g.drawImage(imgStates.get(toggled? 1 : 0), 
+				(int)(screenWidth * x), (int)(screenHeight * y), 
+				(int)(relativeWidth * scale), (int)(relativeHeight * scale), 
+				null);
 	}
 	
 	/**

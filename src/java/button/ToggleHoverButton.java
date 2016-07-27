@@ -2,7 +2,6 @@ package button;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.ReadImage;
@@ -17,7 +16,7 @@ import main.StateHandler;
  */
 public class ToggleHoverButton implements IButton{
 
-	private List<BufferedImage> imgStates = new ArrayList<BufferedImage>();
+	private List<BufferedImage> imgStates;
 	private int imageWidth, imageHeight;
 	private double 
 			screenWidth = StateHandler.width,
@@ -40,10 +39,7 @@ public class ToggleHoverButton implements IButton{
 		imageWidth = composedImg.getWidth()/2;
 		imageHeight = composedImg.getHeight()/2;
 		
-		imgStates.add(imgSheet.grabImage(1, 1, imageWidth, imageHeight));
-		imgStates.add(imgSheet.grabImage(1, 2, imageWidth, imageHeight));
-		imgStates.add(imgSheet.grabImage(2, 1, imageWidth, imageHeight));
-		imgStates.add(imgSheet.grabImage(2, 2, imageWidth, imageHeight));
+		imgStates = imgSheet.getImages(2, 2);
 		
 		this.scale = scale;
 		this.toggled = toggled;

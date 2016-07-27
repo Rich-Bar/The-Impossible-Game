@@ -46,10 +46,8 @@ public class StaticButton implements IButton{
 	}
 	
 	public void render(Graphics g){
-		//drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer)
 		g.drawImage(buttonImg, 	(int)(screenWidth * x), (int)(screenHeight * y),
-								(int)(screenWidth * x + relativeWidth * scale), (int)(screenHeight * y + relativeHeight * scale),
-								0, 0, imageWidth, imageHeight, null);
+					(int)(relativeWidth * scale), (int)(relativeHeight * scale), null);
 		
 	}
 	
